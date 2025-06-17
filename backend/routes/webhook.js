@@ -9,7 +9,7 @@ router.post("/whatsapp", async (req, res) => {
 
   try {
     // Log the entire raw request body to see its structure
-    console.log("📥 Received raw Green API webhook body:", JSON.stringify(req.body, null, 2));
+    console.log("📥 [v2] Received raw Green API webhook body:", JSON.stringify(req.body, null, 2));
 
     // Green API sometimes nests the actual payload inside a "body" property.
     // We will now handle both cases: nested and non-nested.
