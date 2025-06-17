@@ -3,7 +3,7 @@ services:
     name: whatsapp-onboarding-assistant
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm install --production
     startCommand: npm run safe
     envVars:
       - key: GREEN_API_ID_INSTANCE
