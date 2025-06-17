@@ -41,6 +41,16 @@ NODE_ENV=production
 
 ### 3. Run Different Modes
 
+#### 🔥 **Firestore Mode (Recommended - No MongoDB required)**
+```bash
+npm run firestore
+```
+- **Zero database setup** - Cloud Firestore handles everything
+- **Auto-scaling** - Handles millions of users
+- **Real-time sync** - Live updates across all devices
+- **No installation** - Works immediately
+- **Perfect for production** - Enterprise-grade reliability
+
 #### 🛡️ **Safe Mode (Production - Green API)**
 ```bash
 npm run safe
@@ -164,12 +174,56 @@ GREEN_API_ID_INSTANCE=your_instance_id      # From green-api.com
 GREEN_API_TOKEN_INSTANCE=your_token         # From green-api.com
 ```
 
+### Firestore Configuration (for Firestore mode)
+```env
+# Option 1: Using Firebase Project ID (requires gcloud CLI)
+FIREBASE_PROJECT_ID=your-firebase-project-id
+
+# Option 2: Using Service Account Key (for production)
+FIREBASE_SERVICE_ACCOUNT_KEY='{"type":"service_account","project_id":"your-project",...}'
+```
+
 ### Optional
 ```env
 GREEN_API_WEBHOOK_TOKEN=your_webhook_token  # For webhook verification
 PORT=3000                                    # Server port
 NODE_ENV=production                          # Environment mode
 ```
+
+## 🔥 Firestore Setup (Quick Start)
+
+### 1. Create Firebase Project
+1. Go to [Firebase Console](https://console.firebase.google.com)
+2. Create new project: `whatsapp-onboarding`
+3. Enable Firestore Database
+
+### 2. Configure Authentication
+
+#### Option A: Development (using gcloud CLI)
+```bash
+# Install gcloud CLI
+curl https://sdk.cloud.google.com | bash
+gcloud init
+gcloud auth application-default login
+
+# Set project ID in .env
+echo "FIREBASE_PROJECT_ID=your-project-id" >> .env
+```
+
+#### Option B: Production (using Service Account)
+1. Go to Firebase Console → Project Settings → Service Accounts
+2. Generate new private key
+3. Copy the JSON content to your `.env`:
+```env
+FIREBASE_SERVICE_ACCOUNT_KEY='{"type":"service_account","project_id":"your-project-id","private_key_id":"...","private_key":"...","client_email":"...","client_id":"...","auth_uri":"...","token_uri":"...","auth_provider_x509_cert_url":"...","client_x509_cert_url":"..."}'
+```
+
+### 3. Run Firestore Mode
+```bash
+npm run firestore
+```
+
+**That's it!** 🎉 No MongoDB installation, no database setup, no connection issues!
 
 ## 🛠️ Development
 
