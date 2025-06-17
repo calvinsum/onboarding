@@ -88,24 +88,30 @@ npm run llm-demo
 
 ### Step 1: Deploy to Production
 
-#### Option A: Railway (Recommended)
+#### 🥇 Option A: Render (Recommended - 5 minutes)
+1. Go to [render.com](https://render.com) → **New** → **Web Service**
+2. Connect GitHub: `calvinsum/onboarding`
+3. **Start Command:** `npm run safe`
+4. **Environment Variables:**
+   - `GREEN_API_ID_INSTANCE`: `7105261695`
+   - `GREEN_API_TOKEN_INSTANCE`: `fa7c8226d9c54aa58e716c0f80b4414f7b0706c9a3114ddcaa`
+5. Deploy! 🚀
+
+**📘 Detailed Guide:** See [DEPLOY_RENDER.md](./DEPLOY_RENDER.md)
+
+#### Option B: Railway
 1. Fork this repository
 2. Connect to [Railway](https://railway.app)
 3. Deploy with environment variables
 4. Get your public URL: `https://your-app.railway.app`
 
-#### Option B: Heroku
+#### Option C: Heroku
 ```bash
 heroku create your-onboarding-app
 heroku config:set GREEN_API_ID_INSTANCE=your_instance_id
 heroku config:set GREEN_API_TOKEN_INSTANCE=your_token
 git push heroku main
 ```
-
-#### Option C: Vercel/Netlify
-- Deploy as serverless functions
-- Configure environment variables
-- Set up API routes
 
 ### Step 2: Configure Live Webhooks
 

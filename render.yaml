@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: whatsapp-onboarding-assistant
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm run safe
+    envVars:
+      - key: GREEN_API_ID_INSTANCE
+        value: 7105261695
+      - key: GREEN_API_TOKEN_INSTANCE
+        value: fa7c8226d9c54aa58e716c0f80b4414f7b0706c9a3114ddcaa
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+    healthCheckPath: /health
+    domains:
+      - whatsapp-onboarding-assistant.onrender.com 
