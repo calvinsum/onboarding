@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Acquisition Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Merchant Acquisition</h1>
+            <p>Add new merchants and trigger automated WhatsApp onboarding</p>
+        </div>
+        
+        <div class="card">
+            <h2>➕ Add New Merchant</h2>
+            <div id="alertContainer"></div>
+            
+            <form id="merchantForm">
+                <div class="form-group">
+                    <label for="merchantName">Merchant Name *</label>
+                    <input type="text" id="merchantName" required placeholder="e.g., John's Restaurant">
+                </div>
+                
+                <div class="form-group">
+                    <label for="companyName">Company Name</label>
+                    <input type="text" id="companyName" placeholder="e.g., John's Delicious Food Ltd">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactNumber">WhatsApp Number *</label>
+                    <input type="tel" id="contactNumber" required placeholder="e.g., 601154230831">
+                </div>
+                
+                <button type="submit" class="btn">
+                    🚀 Add Merchant & Start Onboarding
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('merchantForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                merchantName: document.getElementById('merchantName').value.trim(),
+                companyName: document.getElementById('companyName').value.trim(),
+                contactNumber: document.getElementById('contactNumber').value.trim()
+            };
+            
+            if (!formData.merchantName || !formData.contactNumber) {
+                showAlert('Please fill in all required fields', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/acquisition/merchant', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showAlert('✅ Merchant added successfully! Onboarding message sent.', 'success');
+                    document.getElementById('merchantForm').reset();
+                } else {
+                    showAlert('⚠️ ' + result.error, 'error');
+                }
+                
+            } catch (error) {
+                showAlert('❌ Network error. Please try again.', 'error');
+            }
+        });
+        
+        function showAlert(message, type) {
+            const container = document.getElementById('alertContainer');
+            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+        }
+    </script>
+</body>
+</html> 
