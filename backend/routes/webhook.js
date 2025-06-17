@@ -32,8 +32,14 @@ router.post("/whatsapp", async (req, res) => {
         return res.status(400).json({ error: "Missing phone number or message" });
       }
 
-      // Process the message using the dedicated onboarding service
-      await handleIncomingMessage(phoneNumber, message, merchants, whatsappService);
+      console.log(`[Webhook] Processing message from ${phoneNumber}: "${message}"`);
+      try {
+        // Process the message using the dedicated onboarding service
+        await handleIncomingMessage(phoneNumber, message, merchants, whatsappService);
+        console.log(`[Webhook] Successfully processed message for ${phoneNumber}.`);
+      } catch (serviceError) {
+        console.error(`❌ Error in onboarding service for ${phoneNumber}:`, serviceError);
+      }
 
       res.status(200).json({ success: true, message: "Webhook processed successfully" });
     } else {
