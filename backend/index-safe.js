@@ -241,10 +241,6 @@ app.get("/health", (req, res) => {
 const adminRoutes = require('./routes/admin');
 app.use('/api/admin', adminRoutes);
 
-// ===== Test Endpoints (for development) =====
-const testRoutes = require('./routes/test');
-app.use('/api/test', testRoutes);
-
 // ===== Merchant Acquisition Endpoints =====
 const acquisitionRoutes = require('./routes/acquisition');
 app.use('/api/acquisition', acquisitionRoutes);
