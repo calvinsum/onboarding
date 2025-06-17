@@ -736,9 +736,8 @@ if (require.main === module) {
     console.log('3. Send messages to your Green API WhatsApp number');
     console.log('4. Monitor conversations at /api/merchants');
     
-    // Start polling for messages
-    console.log('\n📥 Starting message polling...');
-    pollForMessages();
+    // Start polling for messages (now handled by webhook)
+    // pollForMessages();
   });
 }
 
