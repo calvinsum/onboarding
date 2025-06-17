@@ -8,13 +8,14 @@ router.post("/whatsapp", async (req, res) => {
   const { merchants, whatsappService, handleIncomingMessage } = req.app.locals;
 
   try {
-    // Green API nests the actual payload inside a "body" property
-    const webhookBody = req.body.body;
+    // Log the entire raw request body to see its structure
+    console.log("📥 Received raw Green API webhook body:", JSON.stringify(req.body, null, 2));
 
-    // Log the raw payload for debugging if you need it
-    // console.log("📥 Received Green API webhook:", JSON.stringify(req.body, null, 2));
+    // Green API sometimes nests the actual payload inside a "body" property.
+    // We will now handle both cases: nested and non-nested.
+    const webhookBody = req.body.body ? req.body.body : req.body;
 
-    if (!webhookBody) {
+    if (!webhookBody || Object.keys(webhookBody).length === 0) {
         console.warn("⚠️ Webhook received but it has no 'body' property. Skipping.");
         return res.status(200).json({ success: true, message: "Webhook acknowledged, but no body found." });
     }
